@@ -7,9 +7,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from csv_processing.models import FileUploadModel
-from csv_processing.serializers import (CSVFileListSerializer,
-                                        CSVFileRetrieveSerializer,
-                                        CSVFileUploadSerializer)
+from csv_processing.serializers import (
+    CSVFileListSerializer,
+    CSVFileRetrieveSerializer,
+    CSVFileUploadSerializer,
+)
 from csv_processing.tasks import process_csv_file_task
 
 

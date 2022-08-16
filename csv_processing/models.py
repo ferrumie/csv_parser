@@ -1,7 +1,10 @@
 from django.db import models
 
-from .utils import (file_download_directory, file_upload_directory,
-                    generate_processing_id)
+from .utils import (
+    file_download_directory,
+    file_upload_directory,
+    generate_processing_id,
+)
 
 # Create your models here.
 
