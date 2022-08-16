@@ -16,10 +16,13 @@ coreapi==2.3.3
 coreschema==0.0.4
 dask==2022.8.0
 Deprecated==1.2.13
+dj-database-url==1.0.0
 Django==4.1
+django-heroku==0.3.1
 djangorestframework==3.13.1
 drf-yasg==1.21.3
 fsspec==2022.7.1
+gunicorn==20.1.0
 idna==3.3
 inflection==0.5.1
 isort==5.10.1
@@ -55,4 +58,5 @@ uritemplate==4.1.1
 urllib3==1.26.11
 vine==5.0.0
 wcwidth==0.2.5
+whitenoise==6.2.0
 wrapt==1.14.1
