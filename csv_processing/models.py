@@ -1,3 +1,19 @@
 from django.db import models
 
+from .utils import file_upload_directory, generate_processing_id
+
 # Create your models here.
+
+class FileUploadModel(models.Model):
+    processing_id = models.CharField(max_length=32, unique=True, editable=False, default=generate_processing_id)
+    file = models.FileField(max_length=255, upload_to=file_upload_directory)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        """
+        Unicode representation for File upload model.
+
+        :return: string
+        """
+        return f'file - {self.processing_id}'
