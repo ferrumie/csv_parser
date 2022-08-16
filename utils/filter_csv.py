@@ -8,4 +8,4 @@ def parse_csv(csv_file: IO, file_name: str) -> IO:
     dataset['Number of Plays'] = dataset.groupby(['Song', 'Date'], sort=False, dropna=True)['Number of Plays'].transform('sum', meta=pd.Series(dtype='int', name='Number of Plays'))
     result_dataframe = dataset.drop_duplicates(['Song', 'Date'], ignore_index=False).rename(columns={'Number of Plays': 'Total Number of Plays for Date'})
     file_name = file_name.split('/')[-1][:-4]
-    return result_dataframe.to_csv(f"media/processed/{file_name[:-4]}_output.csv", index=False, single_file=True)
+    return result_dataframe.to_csv(f"media/processed/{file_name}_output.csv", index=False, single_file=True)

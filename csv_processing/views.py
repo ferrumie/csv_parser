@@ -26,7 +26,7 @@ class CSVFileUploadView(APIView):
         file = request.FILES.get('file')
         if file:
             if not file.name.lower().endswith('csv'):
-                return Response({"message": "Please upload a CSV file."}, status=status.HTTP_200_OK)
+                return Response({"message": "Please upload a CSV file."}, status=status.HTTP_400_BAD_REQUEST)
 
             # write file chunks into a proper file
             # this is handled by multipart parser
@@ -40,7 +40,7 @@ class CSVFileUploadView(APIView):
                 "processing_id": str(instance.processing_id)
             }
             return Response(response, status=status.HTTP_200_OK)
-        return Response({"message": "Please upload a file."}, status=status.HTTP_200_OK)
+        return Response({"message": "Please upload a file."}, status=status.HTTP_404_NOT_FOUND)
 
 
 class CSVFileRetrieveView(APIView):
