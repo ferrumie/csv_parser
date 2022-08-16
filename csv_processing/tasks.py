@@ -1,8 +1,10 @@
+import os
 from typing import IO, Any
+
 from celery import shared_task
+
 from csv_processing.models import FileUploadModel
 from utils.filter_csv import parse_csv
-import os
 
 
 @shared_task()

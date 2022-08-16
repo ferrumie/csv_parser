@@ -1,12 +1,14 @@
+from unittest import mock
+
+from django.core.files import File
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test.utils import override_settings
 from django.urls import reverse
+from rest_framework import status
 from rest_framework.exceptions import ErrorDetail
 from rest_framework.test import APIClient, APITestCase
-from django.core.files import File
-from unittest import mock
-from rest_framework import status
-from django.test.utils import override_settings
+
 from csv_processing.models import FileUploadModel
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 class CSVProcessingAPITestCase(APITestCase):

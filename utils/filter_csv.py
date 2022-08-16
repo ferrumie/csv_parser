@@ -1,6 +1,7 @@
 from typing import IO
-from dask import dataframe as dd
+
 import pandas as pd
+from dask import dataframe as dd
 
 
 def parse_csv(csv_file: IO, file_name: str) -> IO:
