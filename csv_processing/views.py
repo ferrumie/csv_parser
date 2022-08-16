@@ -2,14 +2,13 @@ from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.parsers import FileUploadParser, MultiPartParser, JSONParser
+from rest_framework.parsers import MultiPartParser
 from django.shortcuts import get_object_or_404
 
-import os
 
 from rest_framework.generics import ListAPIView
 
-from .tasks import process_csv_file_task
+from csv_processing.tasks import process_csv_file_task
 
 from csv_processing.serializers import CSVFileListSerializer, CSVFileRetrieveSerializer, CSVFileUploadSerializer
 from csv_processing.models import FileUploadModel
