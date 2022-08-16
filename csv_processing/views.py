@@ -6,7 +6,8 @@ from rest_framework.parsers import FileUploadParser
 
 from .tasks import process_csv_file_task
 
-from .serializers import CSVFileUploadSerializer
+from csv_processing.serializers import CSVFileUploadSerializer
+from csv_processing.models import FileUploadModel
 
 class CSVFileUploadView(APIView):
     serializer_class = CSVFileUploadSerializer
@@ -20,4 +21,13 @@ class CSVFileUploadView(APIView):
         # run a celery task to process the file
         # save the file in the model
         file = serializer.validated_data['file']
-        process_csv_file_task.delay(file)
+        instance = serializer.save(commit=False)
+        instance.parse_status = FileUploadModel.PROCESSING
+        instance.save()
+        process_csv_file_task.delay(file, instance)
+
+        # return the processing id
+        response = {
+            "processing_id": instance.processing_id
+        }
+        return Response(response, status=status.HTTP_200_OK)
