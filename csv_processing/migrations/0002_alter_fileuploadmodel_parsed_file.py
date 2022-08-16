@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('csv_processing', '0001_initial'),
+        ("csv_processing", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='fileuploadmodel',
-            name='parsed_file',
-            field=models.FileField(max_length=255, null=True, upload_to=csv_processing.utils.file_download_directory),
+            model_name="fileuploadmodel",
+            name="parsed_file",
+            field=models.FileField(
+                max_length=255,
+                null=True,
+                upload_to=csv_processing.utils.file_download_directory,
+            ),
         ),
     ]

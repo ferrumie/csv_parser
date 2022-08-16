@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class CsvProcessingConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'csv_processing'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "csv_processing"

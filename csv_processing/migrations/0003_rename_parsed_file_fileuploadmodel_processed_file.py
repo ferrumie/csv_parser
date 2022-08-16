@@ -6,13 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('csv_processing', '0002_alter_fileuploadmodel_parsed_file'),
+        ("csv_processing", "0002_alter_fileuploadmodel_parsed_file"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='fileuploadmodel',
-            old_name='parsed_file',
-            new_name='processed_file',
+            model_name="fileuploadmodel",
+            old_name="parsed_file",
+            new_name="processed_file",
         ),
     ]

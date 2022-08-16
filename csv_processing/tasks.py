@@ -4,6 +4,7 @@ from csv_processing.models import FileUploadModel
 from utils.filter_csv import parse_csv
 import os
 
+
 @shared_task()
 def process_csv_file_task(instance_id: int) -> None:
     try:
@@ -15,9 +16,6 @@ def process_csv_file_task(instance_id: int) -> None:
     instance.parse_status = FileUploadModel.COMPLETED
 
     # get the relative part by splitting the path returned by dask
-    rel_path = ('/').join(csv_file[0].split('/')[-2:])
+    rel_path = ("/").join(csv_file[0].split("/")[-2:])
     instance.processed_file = rel_path
     instance.save()
-        
-
-

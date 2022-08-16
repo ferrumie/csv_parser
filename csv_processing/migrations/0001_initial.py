@@ -8,20 +8,59 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='FileUploadModel',
+            name="FileUploadModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('processing_id', models.CharField(default=csv_processing.utils.generate_processing_id, editable=False, max_length=32, unique=True)),
-                ('file', models.FileField(max_length=255, null=True, upload_to=csv_processing.utils.file_upload_directory)),
-                ('parsed_file', models.FileField(max_length=255, null=True, upload_to=csv_processing.utils.file_upload_directory)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('parse_status', models.IntegerField(choices=[(0, 'Parse Processing'), (1, 'Parse completed'), (2, 'Parse not started')], default=2)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "processing_id",
+                    models.CharField(
+                        default=csv_processing.utils.generate_processing_id,
+                        editable=False,
+                        max_length=32,
+                        unique=True,
+                    ),
+                ),
+                (
+                    "file",
+                    models.FileField(
+                        max_length=255,
+                        null=True,
+                        upload_to=csv_processing.utils.file_upload_directory,
+                    ),
+                ),
+                (
+                    "parsed_file",
+                    models.FileField(
+                        max_length=255,
+                        null=True,
+                        upload_to=csv_processing.utils.file_upload_directory,
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "parse_status",
+                    models.IntegerField(
+                        choices=[
+                            (0, "Parse Processing"),
+                            (1, "Parse completed"),
+                            (2, "Parse not started"),
+                        ],
+                        default=2,
+                    ),
+                ),
             ],
         ),
     ]
