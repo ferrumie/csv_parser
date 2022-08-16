@@ -12,7 +12,10 @@ def process_csv_file_task(instance_id: int) -> None:
     instance_path = instance.file.path
     csv_file = parse_csv(instance_path, instance.file.name)
     instance.parse_status = FileUploadModel.COMPLETED
-    instance.parsed_file = csv_file[0]
+
+    # get the relative part by splitting the path returned by dask
+    rel_path = ('/').join(csv_file[0].split('/')[-2:])
+    instance.processed_file = rel_path
     instance.save()
         
 

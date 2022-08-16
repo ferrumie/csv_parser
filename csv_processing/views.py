@@ -45,7 +45,6 @@ class CSVFileUploadView(APIView):
 
 class CSVFileRetrieveView(APIView):
     serializer_class = CSVFileRetrieveSerializer
-    parser_classes = (JSONParser,)
     queryset = FileUploadModel.objects.all()
 
     def get(self, request: Request, *args: dict, **kwargs: dict) -> Response:
@@ -54,13 +53,13 @@ class CSVFileRetrieveView(APIView):
         instance = get_object_or_404(FileUploadModel, processing_id=processing_id)
         if instance.parse_status != FileUploadModel.COMPLETED:
             return Response({"message": "File is still being processed."}, status=status.HTTP_404_NOT_FOUND)
-        serializer = self.serializer_class(instance)
+        serializer = self.serializer_class(instance, context={"request": request})
         response = {
-            'parsed_file': instance.parsed_file.path
+            'processed_file': instance.processed_file.path
         }
-        return Response(response, status=status.HTTP_200_OK)
+        print(response)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class CSVListView(ListAPIView):
-    parser_classes = (MultiPartParser,)
     serializer_class = CSVFileListSerializer
     queryset = FileUploadModel.objects.all()
