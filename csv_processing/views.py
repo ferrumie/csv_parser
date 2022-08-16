@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser
 
+from .tasks import process_csv_file_task
+
 from .serializers import CSVFileUploadSerializer
 
 class CSVFileUploadView(APIView):
@@ -18,4 +20,4 @@ class CSVFileUploadView(APIView):
         # run a celery task to process the file
         # save the file in the model
         file = serializer.validated_data['file']
-            
+        process_csv_file_task.delay(file)
