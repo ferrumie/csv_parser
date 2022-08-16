@@ -4,7 +4,7 @@ import pandas as pd
 from dask import dataframe as dd
 
 
-def parse_csv(csv_file: IO, file_name: str) -> IO:
+def parse_csv(csv_file: IO, file_name: str) -> str:
     """collect chunk of csv files and filter the data."""
     dataset = dd.read_csv(
         csv_file, parse_dates=["Date"], blocksize=64000000
