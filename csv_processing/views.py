@@ -55,6 +55,7 @@ class CSVFileRetrieveView(APIView):
         serializer = self.serializer_class(instance, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 class CSVListView(ListAPIView):
     serializer_class = CSVFileListSerializer
     queryset = FileUploadModel.objects.all()

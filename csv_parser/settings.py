@@ -41,7 +41,12 @@ INSTALLED_APPS = [
 
     # rest framework
     'rest_framework',
+
+    # apps
     'csv_processing',
+
+    # docs
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
