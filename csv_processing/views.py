@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.parsers import FileUploadParser, MultiPartParser
+from rest_framework.parsers import FileUploadParser, MultiPartParser, JSONParser
 from django.shortcuts import get_object_or_404
 
 import os
@@ -45,16 +45,22 @@ class CSVFileUploadView(APIView):
 
 class CSVFileRetrieveView(APIView):
     serializer_class = CSVFileRetrieveSerializer
+    parser_classes = (JSONParser,)
+    queryset = FileUploadModel.objects.all()
 
     def get(self, request: Request, *args: dict, **kwargs: dict) -> Response:
         """Returns the processed CSV file if ready."""
-        processing_id = self.kwargs.get('id')
+        processing_id = self.kwargs.get('processing_id')
         instance = get_object_or_404(FileUploadModel, processing_id=processing_id)
         if instance.parse_status != FileUploadModel.COMPLETED:
             return Response({"message": "File is still being processed."}, status=status.HTTP_404_NOT_FOUND)
-        serializer = self.serializer_class(instance=instance)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = self.serializer_class(instance)
+        response = {
+            'parsed_file': instance.parsed_file.path
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 class CSVListView(ListAPIView):
+    parser_classes = (MultiPartParser,)
     serializer_class = CSVFileListSerializer
     queryset = FileUploadModel.objects.all()

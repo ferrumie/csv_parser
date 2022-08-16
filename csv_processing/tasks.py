@@ -12,7 +12,6 @@ def process_csv_file_task(instance_id: int) -> None:
     instance_path = instance.file.path
     csv_file = parse_csv(instance_path, instance.file.name)
     instance.parse_status = FileUploadModel.COMPLETED
-    breakpoint()
     instance.parsed_file = csv_file[0]
     instance.save()
         
