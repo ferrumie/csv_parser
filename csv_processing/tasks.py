@@ -2,6 +2,7 @@ from typing import IO, Any
 from celery import shared_task
 from .models import FileUploadModel
 from utils.filter_csv import parse_csv
+import os
 
 @shared_task()
 def process_csv_file_task(instance_id: int) -> None:
@@ -19,11 +20,4 @@ def process_csv_file_task(instance_id: int) -> None:
     instance.save()
         
 
-def write_file_chunks(file: IO, instance:Any) -> None:
-    new_file = file
-    file_name = file.name
-    with open(file_name, 'wb') as temp_file:
-        for chunk in new_file.chunks():
-            temp_file.write(chunk)
-    instance.file = new_file
-    instance.save()
+

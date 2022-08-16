@@ -9,7 +9,7 @@ import os
 
 from rest_framework.generics import ListAPIView
 
-from .tasks import process_csv_file_task, write_file_chunks
+from .tasks import process_csv_file_task
 
 from csv_processing.serializers import CSVFileListSerializer, CSVFileRetrieveSerializer, CSVFileUploadSerializer
 from csv_processing.models import FileUploadModel
@@ -29,11 +29,11 @@ class CSVFileUploadView(APIView):
                 return Response({"message": "Please upload a CSV file."}, status=status.HTTP_200_OK)
 
             # write file chunks into a proper file
-            instance = FileUploadModel.objects.create(parse_status = FileUploadModel.PROCESSING)
-            write_file_chunks(file, instance)
+            # this is handled by multipart parser
+            instance = FileUploadModel.objects.create(parse_status = FileUploadModel.PROCESSING, file=file)
 
             # process and save the celery file
-            process_csv_file_task(instance.id)
+            process_csv_file_task.delay(instance.id)
 
             # return the processing id
             response = {
@@ -54,10 +54,6 @@ class CSVFileRetrieveView(APIView):
         if instance.parse_status != FileUploadModel.COMPLETED:
             return Response({"message": "File is still being processed."}, status=status.HTTP_404_NOT_FOUND)
         serializer = self.serializer_class(instance, context={"request": request})
-        response = {
-            'processed_file': instance.processed_file.path
-        }
-        print(response)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class CSVListView(ListAPIView):
