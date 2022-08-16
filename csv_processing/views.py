@@ -2,37 +2,45 @@ from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.parsers import FileUploadParser
+from rest_framework.parsers import FileUploadParser, MultiPartParser
 from django.shortcuts import get_object_or_404
 
+import os
+
 from rest_framework.generics import ListAPIView
-from .tasks import process_csv_file_task
+
+from .tasks import process_csv_file_task, write_file_chunks
 
 from csv_processing.serializers import CSVFileListSerializer, CSVFileRetrieveSerializer, CSVFileUploadSerializer
 from csv_processing.models import FileUploadModel
 
 class CSVFileUploadView(APIView):
     serializer_class = CSVFileUploadSerializer
-    parser_classes = [FileUploadParser]
+    parser_classes = (MultiPartParser,)
 
     def post(self, request: Request, *args: dict, **kwargs: dict) -> Response:
         """Receives uploaded CSV file."""
-        serializer = self.serializer_class(data=request.data, many=True)
-        serializer.is_valid(raise_exception=True)   
 
         # run a celery task to process the file
         # save the file in the model
-        file = serializer.validated_data['file']
-        instance = serializer.save(commit=False)
-        instance.parse_status = FileUploadModel.PROCESSING
-        instance.save()
-        process_csv_file_task.delay(file, instance)
+        file = request.FILES.get('file')
+        if file:
+            if not file.name.lower().endswith('csv'):
+                return Response({"message": "Please upload a CSV file."}, status=status.HTTP_200_OK)
 
-        # return the processing id
-        response = {
-            "processing_id": instance.processing_id
-        }
-        return Response(response, status=status.HTTP_200_OK)
+            # write file chunks into a proper file
+            instance = FileUploadModel.objects.create(parse_status = FileUploadModel.PROCESSING)
+            write_file_chunks(file, instance)
+
+            # process and save the celery file
+            process_csv_file_task(instance.id)
+
+            # return the processing id
+            response = {
+                "processing_id": str(instance.processing_id)
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        return Response({"message": "Please upload a file."}, status=status.HTTP_200_OK)
 
 
 class CSVFileRetrieveView(APIView):
@@ -49,4 +57,4 @@ class CSVFileRetrieveView(APIView):
 
 class CSVListView(ListAPIView):
     serializer_class = CSVFileListSerializer
-    queryset = FileUploadModel
+    queryset = FileUploadModel.objects.all()

@@ -9,7 +9,7 @@ urlpatterns = [
         name="api_csv_upload",
     ),
     path(
-        "file/<slug:processing_id>",
+        "file/<slug:processing_id>/",
         CSVFileRetrieveView.as_view(),
         name="api_csv_retrieve",
     ),
