@@ -37,12 +37,14 @@ Built to specifically process/parse csv files, looking at duplicated songs in pa
 ###  Setting up heroku
 - using postman or any other API platform
 - send requests to the app link
+NOTE - the heroku url for uploading file is currently down, i had an issue with my AWS account
+    and heroku ephemeral system does not support cross worker paths. Please use the docker approach for now.
     ```
     https://song-counter.herokuapp.com/
     ```
 - for the routes documentation
     ```
-    https://song-counter.herokuapp.com/
+    https://song-counter.herokuapp.com/api/docs/
     ```
 
 ### Uploading CSV Files
