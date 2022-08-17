@@ -78,8 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "csv_parser.wsgi.application"
 
-django_heroku.settings(locals())
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -130,6 +128,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+django_heroku.settings(locals())
 
 # Celery settings
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379")
