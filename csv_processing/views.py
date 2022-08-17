@@ -40,7 +40,7 @@ class CSVFileUploadView(APIView):
 
             # process and save the celery file
             process_csv_file_task.delay(instance.id)
-
+    
             # return the processing id
             response = {"processing_id": str(instance.processing_id)}
             return Response(response, status=status.HTTP_200_OK)
