@@ -88,11 +88,13 @@ You can also run the processor as a standalone by passing in file path on shell
 
 - run 
     ```
-    python csv_filter_run.py <file/to/path.csv>
+    venv/bin/python3 csv_filter_run.py <file/to/path.csv>
     ```
     Where file/to/path is replaced by the path to the actual csv file
 - run our demo filter test with
-    ``` python csv_filter_run.py test_csv.csv ```
+    ``` venv/bin/python3 csv_filter_run.py test_csv.csv ```
+
+- the processed file is stored in `media/processed/` folder
 
 # How the entire flow works
 
