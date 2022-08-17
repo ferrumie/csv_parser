@@ -23,6 +23,8 @@ Built to specifically process/parse csv files, looking at duplicated songs in pa
 
 - https://docs.docker.com/engine/install/ubuntu/
 
+- rename `.env.sample` file on the parent directory to `.env`
+
 - run 
     ```
     docker-compose up --build

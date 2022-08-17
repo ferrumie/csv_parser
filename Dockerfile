@@ -1,5 +1,8 @@
 FROM python:3.9-alpine
 
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # set working directory
 COPY ./requirements.txt /requirements.txt
