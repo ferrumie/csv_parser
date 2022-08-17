@@ -89,3 +89,19 @@ You can also run the processor as a standalone by passing in file path on shell
 # How the entire flow works
 
 ## The Upload
+Taking into consideration that the upload file might be larger than memory
+Django MultiPartParser is used to break the files into smaller chunks, and stored in TemporaryNamedFile, which is then merged into one to reduce the strain on memory. 
+- Why this is used?
+The Parser is quite efficient and is one of the most straightforward way to  handle large files. To really scale up the efficiency, we will have to use a third party file hoster.
+
+### The CSV Processing
+To provide the most efficient threading performance to work on a large csv file larger than memory, dask was used
+
+### How Dask works
+Dask can efficiently perform parallel computations on a single machine using multi-core CPUs. For example, if you have a quad core processor, Dask can effectively use all 4 cores of your system simultaneously for processing. In order to use lesser memory during computations, Dask stores the complete data on the disk, and uses chunks of data (smaller parts, rather than the whole data) from the disk for processing. During the processing, the intermediate values generated (if any) are discarded as soon as possible, to save the memory consumption.
+
+In summary, Dask can run on a cluster of machines to process data efficiently as it uses all the cores of the connected machines. One interesting fact here is that it is not necessary that all machines should have the same number of cores. If one system has 2 cores while the other has 4 cores, Dask can handle these variations internally.
+
+### Space and Time Complexity
+The Time complexity for the processing is O(NLogN)
+The Space Complexity is O(N)
