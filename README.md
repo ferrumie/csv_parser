@@ -82,6 +82,10 @@ After the upload is completed, a task in run in the background to filter out and
 ### Running the csv processor module as a standalone
 You can also run the processor as a standalone by passing in file path on shell
 - After cloning the repository navigate to the root folder
+- create a new environment with `virtualenv venv`
+- activate your environment `source venv/bin/activate`
+- install requirements `pip install -r requirements.txt`
+
 - run 
     ```
     python csv_filter_run.py <file/to/path.csv>
