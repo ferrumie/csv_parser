@@ -94,8 +94,8 @@ DATABASES = {
     }
 }
 
+django_heroku.settings(locals())
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -129,13 +129,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-django_heroku.settings(locals())
-
 # Celery settings
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379")
 CELERY_RESULT_BACKEND = os.environ.get(
     "CELERY_RESULT_BACKEND", "redis://localhost:6379"
 )
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 
 # Static files (CSS, JavaScript, Images)
