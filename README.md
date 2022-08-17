@@ -74,3 +74,18 @@ After the upload is completed, a task in run in the background to filter out and
     ``` for docker user
 - if the file is ready you will see the link to the file processed, if it is not you will see a message telling that it is not ready
 - click on the file link to download the processed file
+
+### Running the csv processor module as a standalone
+You can also run the processor as a standalone by passing in file path on shell
+- After cloning the repository navigate to the root folder
+- run 
+    ```
+    python csv_filter_run.py <file/to/path.csv>
+    ```
+    Where file/to/path is replaced by the path to the actual csv file
+- run our demo filter test with
+    ``` python csv_filter_run.py test_csv.csv ```
+
+# How the entire flow works
+
+## The Upload
